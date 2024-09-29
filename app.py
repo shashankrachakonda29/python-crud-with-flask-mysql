@@ -1,12 +1,16 @@
-import sys
+import sys,os,webbrowser
 from flask import Flask, render_template, request, redirect, url_for
 # from flask import *
 from dbconnection import db
+import pandas as pd
 
 # Add your database connection path here if necessary
 # sys.path.append('D:/CourseVideos/AWSPythonPractice/PythonNotes/Pythonproject/dbconnection')
 
 cur_obj, connection = db.connection_Database()
+# If the database connection fails, this code will raise an exception and stops the execution of the code.
+if cur_obj is None and connection is None:
+    raise Exception("Failed to connect to the database.")
 
 # Create table if it doesn't exist
 cur_obj.execute('CREATE TABLE IF NOT EXISTS branches3 (Roll_NO INT PRIMARY KEY, Fname VARCHAR(20), Lname VARCHAR(20), branch VARCHAR(20));')
@@ -76,6 +80,28 @@ def get_all_students():
     except Exception as e:
         print(f"Error fetching data: {e}")
         return []
+
+
+
+# ------------------------- XLSX upload Start -----------------------------------
+@app.route('/xlsxupload',methods=['GET','POST'])
+def upload_file():
+    if request.method == 'POST':
+        # Set the uploads directory dynamically
+        uploads_dir = "uploads"
+        # Create the uploads directory if it doesn't exist
+        if not os.path.exists(uploads_dir):
+            os.makedirs(uploads_dir)
+
+        file = request.files['xlsx_file']
+        if file.filename != '':
+            filename = file.filename
+
+            file.save(os.path.join('uploads', filename))
+            return redirect(url_for('upload_file', message='File uploaded successfully'))
+    return render_template('xlsxupload.html')
+
+# ------------------------- XLSX upload End -------------------------------------
 
 if __name__ == '__main__':
     app.run(debug=True, port=4500)
