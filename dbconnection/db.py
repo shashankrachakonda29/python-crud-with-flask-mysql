@@ -1,12 +1,13 @@
 import mysql.connector
-database_name = ''
+import logging
+database_name = "" 
 def connection_Database():
     try:
         connection=mysql.connector.connect(host="localhost",user="root",passwd="2908",database=database_name)
         return connection.cursor(),connection
     except mysql.connector.Error as e:
-        print("Error:", e)
-        return None
+        logging.error("Error connecting to database: %s", e)
+        return None, None
 cur_obj, connection = connection_Database()
 if cur_obj is not None and connection is not None:  # Ensure both are not None:
     with connection:
@@ -32,4 +33,3 @@ if cur_obj is not None and connection is not None:  # Ensure both are not None:
         
 else:
     print("Failed to connect to the database.")
-
