@@ -1,0 +1,30 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>XLSX File Upload</title>
+</head>
+<body>
+    <form action="process_upload.php" method="post" enctype="multipart/form-data">
+        <input type="file" name="xlsx_file" accept=".xlsx">
+        <input type="submit" value="Upload">
+    </form>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload XLSX File</title>
+</head>
+<body>
+    <h1>Upload XLSX File</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="xlsx_file" accept=".xlsx">
+        <input type="submit" value="Upload">
+    </form>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+</body>
+</html>
