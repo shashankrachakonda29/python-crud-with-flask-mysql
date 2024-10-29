@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{%block title %} IT Tax {%endblock%}
+{%block body %}
+<div class="container">
+    <h2 class="pt-4">Salary Tax Calculator</h2>
+    <div class="row">
+        <form action="/tax" method="post" class="feild_mrg col-md-7">
+            <div class="form-group row">
+              <label for="annual_salary" class="col-sm-5 col-form-label">Annual Salary:</label>
+              <div class="col-sm-7">
+                <input type="number" id="annual_salary" name="annual_salary" class="form-control" value="{% if Salary %}{{Salary.Annual_Package[1]}}{% else %}350000{% endif %}" required>
+              </div>
+            </div>
+            <!-- <div class="form-group row">
+              <label for="down-payment1" class="col-sm-5 col-form-label">Down Payment (₹):</label>
+              <div class="col-sm-7">
+                <input type="number" id="down-payment1" name="down_payment" class="form-control"
+                  value="₹{% if Salary %}{{Salary.Annual_Package}}{% else %}8,653{% endif %}" required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="interest-rate1" class="col-sm-5 col-form-label">Interest Rate (p.a.):</label>
+              <div class="col-sm-7">
+                <input type="number" id="interest-rate1" name="interest_rate" step="0.01"
+                  value="{% if Formdetails %}{{ Formdetails.interest_rate }}{% else %}7{% endif %}" class="form-control"
+                  required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="loan-tenure1" class="col-sm-5 col-form-label">Loan Tenure (years):</label>
+              <div class="col-sm-7">
+                <input type="number" id="loan-tenure1" name="loan_tenure" class="form-control"
+                  value="{% if Formdetails %}{{ Formdetails.loan_tenure }}{% else %}1{% endif %}" required>
+              </div>
+            </div>
+            <div class="form-group row justify-content-center">
+              <div class="col-sm-12 text-center mt-3">
+                <button type="submit" class="btn btn-primary mb-2">Calculate</button>
+              </div>
+            </div> -->
+        </form>
+        <div class="card col-md-4 m-2">
+            <div class="card-body d-flex flex-column align-items-center justify-content-center"
+              style="height: 100%; text-align: center;">
+              <h5 class="card-title"><strong>Annual Package</strong></h5>
+              <p class="card-text" style="color: #d6286e; font-size: x-large;">₹{% if Salary %}{{Salary.Annual_Package[0]}}{% else %}350000{% endif %}</p>
+              <h5 class="card-title"><strong>Tax Rate (based on salary)</strong></h5>
+              <p class="card-text" style="color: #d6286e; font-size: x-large;">{% if Salary %}{{Salary.tax_rate}}{% else %}5{% endif %}%</p>
+              <h5 class="card-title"><strong>Annual Tax</strong></h5>
+              <p class="card-text" style="color: #d6286e; font-size: x-large;">₹{% if Salary %}{{Salary.Annual_tax}}{% else %}17,500{% endif %}</p>
+              <h5 class="card-title"><strong>Monthly Salary</strong></h5>
+              <p class="card-text" style="color: #d6286e; font-size: x-large;">₹{% if Salary %}{{Salary.Monthly_Salary}}{% else %}27,708{% endif %}</p>
+              <h5 class="card-title"><strong>Monthly Tax Paying</strong></h5>
+              <p class="card-text" style="color: #d6286e; font-size: x-large;">₹{% if Salary %}{{Salary.Monthly_tax}}{% else %}1,458{% endif %}</p>
+              <h5 class="card-title"><strong>Final Salary</strong></h5>
+              <p class="card-text" style="color: #d6286e; font-size: x-large;">₹{% if Salary %}{{Salary.Final_Salary}}{% else %}3,32,500{% endif %}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

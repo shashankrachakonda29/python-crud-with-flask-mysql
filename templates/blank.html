@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!-- Created by CodingLab |www.youtube.com/c/CodingLabYT-->
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  {% include './commonfiles/link.html' %}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    {% include './commonfiles/header.html' %}
+    {{blank()}}
+    {% if colnames %}
+    <table class="table">
+        <thead>
+          <tr>
+            {% for column in colnames %}
+              <th scope="col">{{ column }}</th>
+            {% endfor %}
+            <th scope="col"><button class="btn btn-primary btn-sm">+ add</button></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+          <tr>
+            {% for col in row %}
+              <td>{{col}}</td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+         
+        </tbody>
+      </table>
+      {% else %}
+      <p>No Data found.</p>
+      {% endif %}
+  
+      {% if success %}
+      <p>added successfully!</p>
+      {% endif %}
+
+</body>
+
+</html>

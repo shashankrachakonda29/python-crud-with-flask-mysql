@@ -1,0 +1,164 @@
+<div class="main_body" id="body-pd">
+  <header class="header" id="header">
+    <div class="header_toggle"><i id="header-toggle" class="fas fa-bars text-white"></i> </div>
+    <div class="container-fluid navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="#">Myapp</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <ul class="navbar-nav mb-2 header-nav mb-lg-0">
+          <li class="nav-item dropdown pe-3">
+            <a class="nav-link nav-profile d-flex align-items-center pe-0" id="navbarDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="../static/images/profile-img.jpg" alt="Profile" class="rounded-circle">
+              <span class="d-none d-md-block dropdown-toggle ps-2"> {{name}}</span>
+            </a>
+            <ul class="dropdown-menu profile" aria-labelledby="navbarDropdown">
+              <li class="dropdown-header">
+                <h6>{{name}}</h6>
+                <span>Web Developer</span>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                  <i class="bi bi-person"></i>
+                  <span>My Profile</span>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                  <i class="bi bi-gear"></i>
+                  <span>Account Settings</span>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                  <i class="bi bi-question-circle"></i>
+                  <span>Need Help?</span>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="{{ url_for('logout') }}">
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span>Sign Out</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  <div class="l-navbar" id="nav-bar">
+    <nav class="nav">
+      <div>
+        <!-- <a href="#" class="nav_logo"><i class="fas fa-angry"></i> <span class="nav_logo-name">Example</span></a> -->
+        <div class="nav_list">
+          <a href="{{url_for('home')}}" class="nav_link active"> <i class="fas fa-angry"></i>
+            <span class="nav_name">Dashboard</span> </a>
+          <a href="{{url_for('dashboard')}}" class="nav_link"> <i class="fab fa-angellist"></i>
+            <span class="nav_name">Add Info</span> </a>
+          <a href="xlsxupload" class="nav_link"> <i class="fas fa-anchor"></i> <span class="nav_name">xlsxupload</span>
+          </a>
+          <a href="{{url_for('emi')}}" class="nav_link"> <i class="fa-solid fa-landmark"></i> <span class="nav_name">Loan Emi</span>
+          </a>
+          <a href="{{url_for('tax')}}" class="nav_link"> <i class="fa-solid fa-cash-register"></i> <span class="nav_name">Income Tax</span>
+          </a>
+          <a class="nav_link  dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false"> <i class="fas fa-award"></i> <span class="nav_name">Dropdown</span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </nav>
+  </div>
+
+
+</div>
+
+
+<script>
+
+  document.addEventListener("DOMContentLoaded", function (event) {
+
+    const showNavbar = (toggleId, navId, bodyId, headerId) => {
+      const toggle = document.getElementById(toggleId),
+        nav = document.getElementById(navId),
+        bodypd = document.getElementById(bodyId),
+        headerpd = document.getElementById(headerId)
+      bodycls = document.getElementsByTagName('body')[0]
+
+      if (toggle && nav && bodypd && headerpd) {
+        toggle.addEventListener('click', () => {
+          nav.classList.toggle('show')
+          toggle.classList.toggle('bx-x')
+          bodypd.classList.toggle('body-pd')
+          headerpd.classList.toggle('body-pd')
+          bodycls.classList.toggle('body-pd')
+        })
+      }
+    }
+
+    showNavbar('header-toggle', 'nav-bar', 'body-pd', 'header')
+
+    const linkColor = document.querySelectorAll('.nav_link')
+
+    function colorLink() {
+      if (linkColor) {
+        linkColor.forEach(l => l.classList.remove('active'))
+        this.classList.add('active')
+      }
+    }
+    linkColor.forEach(l => l.addEventListener('click', colorLink))
+
+  });
+</script>

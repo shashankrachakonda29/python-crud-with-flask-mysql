@@ -16,8 +16,10 @@
 <html>
 <head>
     <title>Upload XLSX File</title>
+    {% include './commonfiles/link.html' %}
 </head>
 <body>
+    {% include './commonfiles/header.html' %}
     <h1>Upload XLSX File</h1>
     <form method="POST" enctype="multipart/form-data">
         <input type="file" name="xlsx_file" accept=".xlsx">

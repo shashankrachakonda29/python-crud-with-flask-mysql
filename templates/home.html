@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{%block title %} Home {%endblock%}
+
+{%block body %}  <div class="row">
+    <div class="col-sm-6">
+        <a href="{{url_for('dashboard')}}" class="card-link">
+            <div class="card">
+                <div class="card-body">
+                <img src="../static/images/frontImg.jpg" alt="Logo" class="card-logo">
+                <h5 class="card-title">Add Info</h5>
+                <p class="card-text">This feature allows you to add info of student/college/order.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-sm-6">
+        <a href="xlsxupload" class="card-link">
+            <div class="card">
+                <div class="card-body">
+                <img src="../static/images/backImg.jpg" alt="Logo" class="card-logo">
+                <h5 class="card-title">Upload XlSX Data</h5>
+                <p class="card-text">This feature allows you to easily read and upload data to the database.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-sm-6">
+        <a href="emi/results" class="card-link">
+            <div class="card">
+                <div class="card-body">
+                <img src="../static/images/frontImg.jpg" alt="Logo" class="card-logo">
+                <h5 class="card-title">Emi Calculator</h5>
+                <p class="card-text">it used to check early Interest are you paying and Principal</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-sm-6">
+        <a href="tax" class="card-link">
+            <div class="card">
+                <div class="card-body">
+                <img src="../static/images/frontImg.jpg" alt="Logo" class="card-logo">
+                <h5 class="card-title">Salary Tax Calculator</h5>
+                <p class="card-text">Used to calculate salary deductions and tax percentages based on income.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-sm-6">
+        <a href="{{ url_for('dynamicfunc', pagename='productelec') }}" class="card-link">
+            <div class="card">
+                <div class="card-body">
+                <img src="../static/images/frontImg.jpg" alt="Logo" class="card-logo">
+                <h5 class="card-title">Product Details</h5>
+                <p class="card-text">Test.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+   
+    <div class="col-sm-6">
+        <a href="{{ url_for('dynamicfunc', pagename='programs offered') }}" class="card-link">
+            <div class="card">
+                <div class="card-body">
+                <img src="../static/images/frontImg.jpg" alt="Logo" class="card-logo">
+                <h5 class="card-title">Product Details</h5>
+                <p class="card-text">Test.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-sm-6">
+        <a href="{{ url_for('dynamicfunc', pagename='programs offered') }}" class="card-link">
+            <div class="card">
+                <div class="card-body">
+                <img src="../static/images/frontImg.jpg" alt="Logo" class="card-logo">
+                <h5 class="card-title">Product Details</h5>
+                <p class="card-text">Test.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div> {%endblock%}

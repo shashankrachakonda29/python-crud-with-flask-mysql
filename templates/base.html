@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title%} {%endblock%}</title>
+    {% include './commonfiles/link.html' %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    {% include './commonfiles/header.html' %}
+    {%block body%}{%endblock%}
+</body>
+
+</html>

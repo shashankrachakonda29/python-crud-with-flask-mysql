@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loan Repayment Summary</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .legend-box {
+      width: 9px;
+      /* Set width */
+      height: 9px;
+      /* Set height */
+      display: inline-block;
+      /* Make it inline-block */
+      margin-right: 5px;
+      /* Space between box and text */
+      /* Optional: for rounded corners */
+    }
+
+    canvas {
+      width: 310px !important;
+      /* Set the width */
+      height: 120px !important;
+      /* Set the height */
+    }
+
+    .feild_mrg>.form-group {
+      padding: 5px;
+    }
+
+    .card {
+      background-color: #e2e3e5;
+    }
+
+    /* sub - table */
+    .sub-table {
+      display: none;
+      /* Hidden by default */
+    }
+
+    .toggle {
+      cursor: pointer;
+      background-color: #f1f1f1;
+    }
+
+    /* table header content */
+    .header-container {
+      display: flex;
+      align-items: center;
+      /* Center items vertically */
+      justify-content: space-between;
+      /* Space between elements */
+      margin-top: 20px;
+      /* Optional: Add some margin on top */
+    }
+
+    .header-container h1 {
+      flex: 1;
+      /* Allow h1 to grow and fill available space */
+      text-align: center;
+      /* Center text */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="calculator-container">
+
+    <div class="mt-4 ms-2">
+      <h4><strong>Car Loan</strong> EMI Calculator</h4>
+      <div class="row">
+        <div class="col-md-8 d-flex border p-3">
+          <form action="/emi" method="post" class="feild_mrg col-sm-8">
+            <div class="form-group row">
+              <label for="loan-amount1" class="col-sm-5 col-form-label">Loan Amount (₹):</label>
+              <div class="col-sm-7">
+                <input type="number" id="loan-amount1" name="loan_amount" class="form-control"
+                  value="{% if Formdetails  %}{{ Formdetails.Total_item_amt }}{% else %}100000{% endif %}" required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="down-payment1" class="col-sm-5 col-form-label">Down Payment (₹):</label>
+              <div class="col-sm-7">
+                <input type="number" id="down-payment1" name="down_payment" class="form-control"
+                  value="{% if Formdetails %}{{ Formdetails.down_payment }}{% else %}0{% endif %}" required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="interest-rate1" class="col-sm-5 col-form-label">Interest Rate (p.a.):</label>
+              <div class="col-sm-7">
+                <input type="number" id="interest-rate1" name="interest_rate" step="0.01"
+                  value="{% if Formdetails %}{{ Formdetails.interest_rate }}{% else %}7{% endif %}" class="form-control"
+                  required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="loan-tenure1" class="col-sm-5 col-form-label">Loan Tenure (years):</label>
+              <div class="col-sm-7">
+                <input type="number" id="loan-tenure1" name="loan_tenure" class="form-control"
+                  value="{% if Formdetails %}{{ Formdetails.loan_tenure }}{% else %}1{% endif %}" required>
+              </div>
+            </div>
+            <div class="form-group row justify-content-center">
+              <div class="col-sm-12 text-center mt-3">
+                <button type="submit" class="btn btn-primary mb-2">Calculate</button>
+              </div>
+            </div>
+          </form>
+          <div class="card col-sm-4 m-2">
+            <div class="card-body d-flex flex-column align-items-center justify-content-center"
+              style="height: 100%; text-align: center;">
+              <h5 class="card-title"><strong>Equated Monthly Installments (EMI)</strong></h5>
+              <p class="card-text" style="color: #d6286e; font-size: x-large;">₹{% if BreakUp %}{{BreakUp.first_month}}
+                {% else %}8,653{%
+                endif %}</p>
+              <h5 class="card-title"><strong>Daily Amount</strong></h5>
+              <p class="card-text" style="color: #d6286e; font-size: x-large;">₹{% if BreakUp %}{{BreakUp.daily_amount}}
+                {% else %}284.4714
+
+                {%
+                endif %}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 ms-4" style="width: fit-content;">
+          <h4><strong>Break-Up of </strong>Total Payment</h4>
+          <div class="border">
+            <div class="p-3 d-flex justify-content-center">
+              <canvas id="myChart" width="600" height="400"></canvas>
+            </div>
+            <div class="border-bottom p-2 d-flex justify-content-between">
+              <div>
+                <div class="legend-box ms-3" style="background-color: #d6286e;"></div>
+                Principal Amt
+              </div>
+              <span style="color: #d6286e;margin-right: 15px">₹ {% if BreakUp %}{{BreakUp['total_principal_repaid']}} {%
+                else %}1,00,000{%
+                endif %}</span>
+            </div>
+            <div class="border-bottom p-2 d-flex justify-content-between">
+              <div>
+                <div class="legend-box ms-3" style="background-color: #999999;"></div>
+                Interest Amt
+              </div>
+              <span style="color: #212529;margin-right: 15px">₹ {% if BreakUp %}{{BreakUp['total_interest_repaid']}}{%
+                else %}3,832{%
+                endif %}</span>
+            </div>
+            <div class="p-2 d-flex justify-content-between">
+              <div>
+                <div class="legend-box ms-3"></div>
+                Total Amt Payable
+              </div>
+              <span style="color: #212529;margin-right: 15px">₹ {% if BreakUp %}{{BreakUp.payable_amt}}{% else
+                %}1,03,832{% endif
+                %}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- <div class="d-flex">
+  <h1 class="mt-5">Loan Repayment Summary</h1>
+  <button class="button" onclick="showPopup()">View Loan Duration Details</button>
+</div> -->
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col text-center">
+        <h2>Loan Repayment Summary</h2>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#loanDurationModal">View Loan
+          Duration Details</button>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="loanDurationModal" tabindex="-1" aria-labelledby="loanDurationModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loanDurationModalLabel">Loan Duration Summary</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p><strong>Total Months:</strong> {% if BreakUp %}{{BreakUp.Total_months}}
+              {% else %}12{%
+              endif %} months</p>
+            <p><strong>Total Days:</strong> {% if BreakUp %}{{BreakUp.No_days}}
+              {% else %}365{%
+              endif %} days</p>
+            <p><strong>Total Years:</strong> {% if BreakUp %}{{BreakUp.Tenure}}
+              {% else %}1{%
+              endif %} year</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if Yearly %}
+  <table class="table table-secondary">
+    <thead>
+      <tr>
+        <th>Year</th>
+        <th>Opening Balance</th>
+        <th>Interest Paid during the Year</th>
+        <th>Principal Repaid during the Year</th>
+        <th>Closing Balance</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for year in Yearly %}
+      <tr class="toggle" onclick="toggleSubTable(`sub-{{ year['Opening Balance']}}`)">
+        <td>{{ year.Year}}</td>
+        <td>₹{{ year['Opening Balance']}}</td>
+        <td>₹{{ year['Interest Paid During Year']}}</td>
+        <td>₹{{ year['Principal Repaid During Year']}}</td>
+        <td>₹{{ year['Closing Balance']}}</td>
+      </tr>
+      <tr id="sub-{{ year['Opening Balance'] }}" class="sub-table" style="display: none;">
+        <td colspan="6" style="padding: 0;">
+          <table class="table table-light" style="margin-top: 20px;margin-left: 70px;">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>(PA)Principal Amount</th>
+                <th>(I)Interest for Month (PA*I)</th>
+                <th>(PC)Principal Component <i>(EMI - I)</i></th>
+                <th>Total Amount (PA + I)</th>
+                <th>Remaining Principal(PA-PC)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for month in year['Monthly Amount'] %}
+              <tr>
+                <td>{{ month['Month'] }}</td>
+                <td>₹{{ month['principal_Amount'] }}</td>
+                <td>₹{{ month['Interest_for_Month'] }}</td>
+                <td>₹{{ month['principal_amt_month'] }}</td>
+                <td>₹{{ month['Total_amt_Month'] }}</td>
+                <td>₹{{ month['Remaining_Principal'] }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <table class="table table-secondary">
+    <thead>
+      <tr>
+        <th>Year</th>
+        <th>Opening Balance</th>
+        <th>Interest Paid during the Year</th>
+        <th>Principal Repaid during the Year</th>
+        <th>Closing Balance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td scope="row">1</td>
+        <td>₹1,00,000</td>
+        <td>₹3,832</td>
+        <td>₹1,00,000</td>
+        <td>₹0</td>
+      </tr>
+    </tbody>
+  </table>
+  {% endif %}
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const serverData =[`{%if BreakUp %}{{BreakUp['total_principal_repaid']}}`, `{{BreakUp['total_interest_repaid']}}{% else %}{{100000}}`, `{{3832}}{% endif %}`]
+    const numericData = serverData.map(value => parseInt(value.replace(/,/g, ''), 10));
+    const ctx = document.getElementById('myChart').getContext('2d')
+    const myChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: numericData,
+          backgroundColor: ['#d6286e', '#999999'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        cutout: '65%', // Adjust this value to control the size of the hole
+        responsive: true,
+        maintainAspectRatio: false,
+        rotation: -90,
+        circumference: 180,
+      }
+
+    });
+    function toggleSubTable(id) {
+      const subTable = document.getElementById(id);
+      if (subTable.style.display === "table-row") {
+        subTable.style.display = "none";
+      } else {
+        subTable.style.display = "table-row";
+      }
+    }
+  </script>
+</body>
+
+</html>
