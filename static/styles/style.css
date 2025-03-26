@@ -227,6 +227,70 @@ body {
 .container #flip {
   display: none;
 }
+/* sign out drop dropdown */
+.navbar-nav .nav-item .sig_ot{
+    margin-left: -4rem !important;
+}
+.sig_ot{
+  margin-left: -4rem;
+}
+
+
+
+
+/* Emi loan Start */
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+th, td {
+  text-align: center; /* Center text */
+}
+.legend-box {
+  width: 9px;
+  height: 9px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+canvas {
+  width: 298px !important;
+  height: 120px !important;
+}
+
+.feild_mrg>.form-group {
+  padding: 5px;
+}
+
+.card {
+  background-color: #e2e3e5;
+}
+
+.sub-table {
+  display: none;
+}
+
+.toggle {
+  cursor: pointer;
+  background-color: #f1f1f1;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.header-container h1 {
+  flex: 1;
+  text-align: center;
+}
+/* Emi End */
 
 @media (max-width: 730px) {
   .container .cover {

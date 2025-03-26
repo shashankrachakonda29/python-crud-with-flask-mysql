@@ -1,0 +1,330 @@
+/* Sign out dropdown */
+.navbar-nav .nav-item .profile {
+  margin-left: -3rem !important;
+}
+.navbar-light .navbar-nav .nav-link{
+  color: #F7F6FB !important;
+}
+.navbar-light .navbar-brand {
+  color: #F7F6FB !important;
+}
+
+.dropdown-menu .dropdown-header,
+.dropdown-menu .dropdown-footer {
+  text-align: center;
+  font-size: 15px;
+  padding: 10px 25px;
+}
+
+.header-nav .profile .dropdown-item i {
+  margin-right: 10px;
+  font-size: 18px;
+  line-height: 0;
+}
+
+.header-nav .nav-profile img {
+  max-height: 36px;
+}
+
+.header-nav .nav-profile span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.header-nav .nav-profile {
+  color: #012970 !important;
+}
+
+/* Card's home page */
+.card-link {
+  text-decoration: none;
+  /* Removes underline */
+  color: inherit;
+  /* Inherits color from the parent */
+}
+
+.card-link:hover {
+  /* Optionally, add hover effects */
+  background-color: rgba(0, 0, 0, 0.05);
+  /* Subtle background change on hover */
+}
+
+.card .card-body {
+  display: flex;
+  /* Use Flexbox */
+  flex-direction: column;
+  /* Stack elements vertically */
+  align-items: center;
+  /* Center elements horizontally */
+  justify-content: center;
+  /* Center elements vertically */
+  text-align: center;
+  /* Center text */
+}
+
+.card-logo {
+  width: 50px;
+  /* Adjust size as needed */
+  height: 50px;
+  /* Ensure height is the same for a perfect circle */
+  border-radius: 50%;
+  /* Makes the image rounded */
+  display: block;
+  /* Ensures no inline spacing issues */
+  margin-bottom: 10px;
+  /* Space between logo and text */
+  object-fit: cover;
+  /* Ensures the image covers the space nicely */
+}
+
+.card {
+  background-color: rgb(234 234 234) !important;
+}
+
+.row .col-sm-6 {
+  padding: 5px;
+}
+
+.row {
+  padding: 1rem;
+}
+
+/* sidebar */
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+
+:root {
+  --header-height: 3rem;
+  --nav-width: 68px;
+  --first-color-light: #AFA5D9;
+  --white-color: #F7F6FB;
+  --body-font: 'Nunito', sans-serif;
+  --normal-font-size: 1rem;
+  --z-fixed: 100
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box
+}
+
+.main_body,body {
+  position: relative;
+  margin: var(--header-height) 0 0 0;
+  padding: 0 1rem;
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  transition: .5s
+}
+
+a {
+  text-decoration: none
+}
+
+.header {
+  width: 100%;
+  height: var(--header-height);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  background-color: rebeccapurple;
+  z-index: var(--z-fixed);
+  transition: .5s
+}
+
+.header_toggle {
+  color: #000000;
+  font-size: 1.5rem;
+  cursor: pointer
+}
+
+.header_img {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden
+}
+
+.header_img img {
+  width: 40px
+}
+
+.l-navbar {
+  position: fixed;
+  left: -30%;
+  width: var(--nav-width);
+  height: 100vh;
+  background-color: rebeccapurple;
+  padding: .5rem 1rem 0 0;
+  transition: .5s;
+  z-index: var(--z-fixed)
+}
+
+.nav {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden
+}
+
+.nav_logo,
+.nav_link {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  align-items: center;
+  column-gap: 1rem;
+  padding: .5rem 0 .5rem 1.5rem
+}
+
+.nav_logo {
+  margin-bottom: 2rem
+}
+
+.nav_logo-icon {
+  font-size: 1.25rem;
+  color: var(--white-color)
+}
+
+.nav_logo-name {
+  color: var(--white-color);
+  font-weight: 700
+}
+
+.nav_link {
+  position: relative;
+  color: var(--first-color-light);
+  margin-bottom: 1.5rem;
+  transition: .3s
+}
+
+.nav_link:hover {
+  color: var(--white-color)
+}
+
+.nav_icon {
+  font-size: 1.25rem
+}
+
+.show {
+  left: 0
+}
+
+.body-pd {
+  padding-left: calc(var(--nav-width) + 1rem)
+}
+
+.active {
+  color: var(--white-color)
+}
+
+.nav .active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 2px;
+  height: 32px;
+  background-color: var(--white-color)
+}
+
+.height-100 {
+  height: 100vh;
+  margin-top: 4rem;
+}
+
+/* Emi loan Start */
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+th, td {
+  text-align: center; /* Center text */
+}
+.legend-box {
+  width: 9px;
+  height: 9px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+canvas {
+  width: 298px !important;
+  height: 120px !important;
+}
+
+.feild_mrg>.form-group {
+  padding: 5px;
+}
+
+.card {
+  background-color: #e2e3e5;
+}
+
+.sub-table {
+  display: none;
+}
+
+.toggle {
+  cursor: pointer;
+  background-color: #f1f1f1;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.header-container h1 {
+  flex: 1;
+  text-align: center;
+}
+/* Emi End */
+
+@media screen and (min-width: 768px) {
+  .main_body,body {
+    margin: calc(var(--header-height) + 1rem) 0 0 0;
+    padding-left: calc(var(--nav-width) + 2rem)
+  }
+
+  .header {
+    height: calc(var(--header-height) + 1rem)
+  }
+
+  .header_img {
+    width: 40px;
+    height: 40px
+  }
+
+  .header_img img {
+    width: 45px
+  }
+
+  .l-navbar {
+    left: 0;
+    padding: 1rem 1rem 0 0
+  }
+
+  .main_body .l-navbar.show {
+    width: calc(var(--nav-width) + 156px)
+  }
+
+  .body-pd {
+    padding-left: calc(var(--nav-width) + 188px)
+  }
+}
+
+.dropdown-toggle::after {
+  margin-left: 0
+}
