@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% block title %}EMI Calculator{% endblock %}
+
+
+{% block content %}
+
+<div class="">
+    <h1>Loan EMI Calculator</h1>
+    <div class="row">
+        <div class="col-md-8 row border" style="height: fit-content;">
+            <div class="col-sm-9">
+                <form method="post" action="/emi" id="emiForm">
+                    <div class="form-group row">
+                        <label for="loan_amount" class="col-sm-4 col-form-label">Loan Amount (₹):</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="loan_amount" name="loan_amount"
+                                value="{% if Formdetails %}{{ Formdetails.Total_item_amt }}{% else %}100000{% endif %}"
+                                required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="down_payment" class="col-sm-4 col-form-label">Down Payment (₹):</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="down_payment" name="down_payment"
+                                value="{% if Formdetails %}{{ Formdetails.down_payment }}{% else %}0{% endif %}"
+                                required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="interest_rate" class="col-sm-4 col-form-label">Interest Rate (p.a.):</label>
+                        <div class="col-sm-8">
+                            <input type="number" step="any" class="form-control" id="interest_rate" name="interest_rate"
+                                value="{% if Formdetails %}{{ Formdetails.interest_rate }}{% else %}7{% endif %}"
+                                required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="loan_tenure" class="col-sm-4 col-form-label">Loan Tenure (years):</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="loan_tenure" name="loan_tenure"
+                                value="{% if Formdetails %}{{ Formdetails.loan_tenure }}{% else %}1{% endif %}"
+                                required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-8 offset-sm-4">
+                            <button type="submit" class="btn btn-primary" id="submitBtn">Calculate</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-3 card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <div class="detail-label">Equated Monthly Installments (EMI)</div>
+                        <div class="detail-value">₹ {% if BreakUp %} {{ BreakUp.first_month }} {% else %}8,653{% endif
+                            %}</div>
+                    </div>
+                    <div class="card-title">
+                        <div class="detail-label">Daily Amount</div>
+                        <div class="detail-value">₹ {% if BreakUp %}{{ BreakUp.daily_amount }}{% else %}279{% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 ms-3 chart-section">
+            <!-- <div class="chart-section"> -->
+                <h3>Break-up of Total Payment</h3>
+                <div class="border">
+                    <div class="chart-container">
+                        <canvas id="emiChart" width="400" height="200"></canvas>
+                      </div>
+                    <ul class="chart-data ps-4 pe-4">
+                      <li><span>Principal Amt</span><span>₹{% if BreakUp %}{{ BreakUp.total_principal_repaid}}{% else %}1,00,000{% endif %}</span></li>
+                      <li><span>Interest Amt</span><span>₹{% if BreakUp %}{{ BreakUp.total_interest_repaid}}{% else %}3,832{% endif %}</span></li>
+                      <li><span>Total Amt Payble</span><span>₹{% if BreakUp %}{{ BreakUp.payable_amt}}{% else %}1,03,832{% endif %}</span></li>
+                    </ul>
+                <!-- </div> -->
+                
+            </div>
+            <!-- <canvas id="emiChart" width="400" height="400"></canvas> -->
+         
+        </div>
+    </div>
+</div> 
+{% if BreakUp %}
+<div class="mt-4">
+    <h2>Loan Repayment Summary</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Opening Balance</th>
+                <th>Interest Paid during the Year</th>
+                <th>Principal Repaid during the Year</th>
+                <th>Closing Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for year_data in Yearly %}
+            <tr class="table-secondary">
+                <td>{{ year_data.Year }}</td>
+                <td>₹{{ year_data['Opening Balance'] }}</td>
+                <td>₹{{ year_data['Interest Paid During Year'] }}</td>
+                <td>₹{{ year_data['Principal Repaid During Year'] }}</td>
+                <td>₹{{ year_data['Closing Balance'] }}</td>
+                <td>
+                    <button class="btn btn-info" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapse{{ year_data.Year }}" aria-expanded="false"
+                        aria-controls="collapse{{ year_data.Year }}">
+                        Show Month Data
+                    </button>
+                </td>
+            <tr class="collapse" id="collapse{{ year_data.Year }}">
+                <td colspan="6">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th>Opening Balance</th>
+                                <th>Interest Paid</th>
+                                <th>Principal Repaid</th>
+                                <th>Closing Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for month_data in year_data['Monthly Amount']%}
+                            <tr>
+                                <td>{{ month_data.Month }}</td>
+                                <td>₹{{ month_data['principal_Amount'] }}</td>
+                                <td>₹{{ month_data['Interest_for_Month'] }}</td>
+                                <td>₹{{ month_data['principal_amt_month'] }}</td>
+                                <td>₹{{ month_data['Remaining_Principal'] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}</br>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const canvas = document.getElementById('emiChart');
+  const ctx = canvas.getContext('2d');
+    new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Principal Amt', 'Interest Amt'],
+        datasets: [{
+            data: [`{% if BreakUp %}{{ BreakUp.total_principal_repaid|replace(',', '') }}{% else %}100000{% endif %}`, `{% if BreakUp %}{{ BreakUp.total_interest_repaid  |replace(',', '') }}{% else %}3832{% endif %}`], // Example values for Principal and Interest
+            backgroundColor: [
+                'rgb(153, 51, 102)',  // Blue for principal
+                'rgb(128, 128, 128)'   // Red for interest
+            ],
+            borderWidth: 0,
+            cutout: '70%',
+            circumference: 180,
+            rotation: 270
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,  // Important for resizing
+        plugins: {
+            // legend: {
+            //     position: 'bottom'  // Place legend at the bottom
+            // }
+            legend:false
+        }
+    },
+    layout: {
+            padding: {
+                top: 20,
+                bottom: 20
+            }
+        },
+      
+});
+
+
+</script>
+
+{% endblock %}

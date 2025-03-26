@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}EMI Calculator{% endblock %}
+
+{% block content %}
+    <h1>EMI Calculator</h1>
+
+    <form method="POST" action="/emi">
+        <div class="form-group">
+            <label for="loan_amount">Loan Amount:</label>
+            <input type="number" class="form-control" id="loan_amount" name="loan_amount" value="{% if Formdetails %}{{ Formdetails.Total_item_amt }}{% endif %}" required>
+        </div>
+        <div class="form-group">
+            <label for="down_payment">Down Payment:</label>
+            <input type="number" class="form-control" id="down_payment" name="down_payment" value="{% if Formdetails %}{{ Formdetails.down_payment }}{% endif %}" required>
+        </div>
+        <div class="form-group">
+            <label for="interest_rate">Interest Rate (%):</label>
+            <input type="number" step="any" class="form-control" id="interest_rate" name="interest_rate" value="{% if Formdetails %}{{ Formdetails.interest_rate }}{% endif %}" required>
+        </div>
+        <div class="form-group">
+            <label for="loan_tenure">Loan Tenure (Years):</label>
+            <input type="number" class="form-control" id="loan_tenure" name="loan_tenure" value="{% if Formdetails %}{{ Formdetails.loan_tenure }}{% endif %}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Calculate</button>
+    </form>
+
+    {% if BreakUp %}
+        <h2>EMI Calculation Results</h2>
+
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Opening Balance</th>
+                    <th>Interest Paid during the Year</th>
+                    <th>Principal Repaid during the Year</th>
+                    <th>Closing Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for year_data in Yearly %}
+                    <tr>
+                        <td>{{ year_data.Year }}</td>
+                        <td>{{ year_data['Opening Balance'] }}</td>
+                        <td>{{ year_data['Interest Paid During Year'] }}</td>
+                        <td>{{ year_data['Principal Repaid During Year'] }}</td>
+                        <td>{{ year_data['Closing Balance'] }}</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="5">  <div id="monthlyCollapse{{ year_data.Year }}" class="collapse">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Month</th>
+                                            <th>Principal Amount</th>
+                                            <th>Interest for Month</th>
+                                            <th>Total Amount (principal + interest)</th>
+                                            <th>Remaining Principal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for month_data in year_data['Monthly Amount'] %}
+                                            <tr>
+                                                <td>{{ month_data.Month }}</td>
+                                                <td>{{ month_data.principal_Amount }}</td>
+                                                <td>{{ month_data.Interest_for_Month }}</td>
+                                                <td>{{ month_data.Total_amt_Month }}</td>
+                                                <td>{{ month_data.Remaining_Principal }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-sm btn-outline-secondary mt-2" type="button" data-toggle="collapse" data-target="#monthlyCollapse{{ year_data.Year }}" aria-expanded="false" aria-controls="monthlyCollapse{{ year_data.Year }}">
+                                {% if year_data.show_monthly %}Hide Monthly Breakdown{% else %}Show Monthly Breakdown{% endif %}
+                            </button>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+    {% endif %}
+
+{% endblock %}

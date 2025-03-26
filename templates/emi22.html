@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loan EMI Calculator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f0f0f0;
+        }
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Loan EMI Calculator</h1>
+        <form action="/calculate" method="POST">
+            <div class="form-group">
+                <label for="loan_amount">Loan Amount (₹)</label>
+                <input type="number" class="form-control" id="loan_amount" name="loan_amount" required>
+            </div>
+            <div class="form-group">
+                <label for="down_payment">Down Payment (₹)</label>
+                <input type="number" class="form-control" id="down_payment" name="down_payment" value="0">
+            </div>
+            <div class="form-group">
+                <label for="interest_rate">Interest Rate (p.a.)</label>
+                <input type="number" class="form-control" id="interest_rate" name="interest_rate" required>
+            </div>
+            <div class="form-group">
+                <label for="loan_tenure">Loan Tenure (years)</label>
+                <input type="number" class="form-control" id="loan_tenure" name="loan_tenure" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Calculate</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
